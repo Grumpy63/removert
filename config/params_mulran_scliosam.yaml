@@ -6,15 +6,16 @@ removert:
   # @ save option 
   saveMapPCD: true 
   saveCleanScansPCD: true
-  save_pcd_directory: "/home/user/Desktop/data/riverside01/removert/results/" # replace to your path (please use an absolute path)
+  save_pcd_directory: "/home/DATABASE/REMOVERT_Output_Labor_full_035/" # replace to your path (please use an absolute path)
+  #save_pcd_directory: "/home/user/Desktop/data/riverside01/removert/results/" # replace to your path (please use an absolute path)
 
 
   # @ sequence info (replace to your paths) 
   #   please follow the KITTI odometry dataset's scan and pose formats (i.e., make them .bin and line-by-line corresponding se3 poses composed of 12 numbers)
-  sequence_scan_dir: "/home/user/Desktop/data/riverside01/sc-lio-sam/Scans/"
-  sequence_pose_path: "/home/user/Desktop/data/riverside01/sc-lio-sam/optimized_poses.txt"
+  sequence_scan_dir: "/home/DATABASE/LIOSAM_Output_Labor/Scans/"
+  sequence_pose_path: "/home/DATABASE/LIOSAM_Output_Labor/optimized_poses.txt"
 
-  sequence_vfov: 50 # including upper and lower fovs, 
+  sequence_vfov: 90 # including upper and lower fovs, 
                     # for example, KITTI's HDL64E is 2 + 24.9 ~ 27 deg. (so 25 + 25 = 50 is recommended because it is enough)
                     #            , MulRan's Ouster OS1-64 has +22.5 to -22.5 deg. (so 22.5 + 22.5 = 45 < 50 is also enough and able to cover the all vfov)
   sequence_hfov: 360 # generally for targetting scanning LiDAR but a lidar having restricted hfov also just can use the 360 (because no point regions are considered in the algorithm)
@@ -30,7 +31,7 @@ removert:
 
   # @ Sampling nodes 
   use_keyframe_gap: true 
-  keyframe_gap: 2 # if you use SC-LIO-SAM's poses, the nodes are already keyframe (i.e., spatially apart enough)
+  keyframe_gap: 1 # if you use SC-LIO-SAM's poses, the nodes are already keyframe (i.e., spatially apart enough)
 
   # use_keyframe_meter: false # TODO
   # keyframe_meter: 2 # TODO, e.g., every 2 meters (using the given pose relative translations) 
@@ -40,14 +41,14 @@ removert:
   #   means the removeter runs on all scans in a specified regions of a sequence 
   #   it means we parse scans every <keyframe_gap> or <keyframe_gap_meter> meter within the idx range [start_idx, end_idx] 
   #   but for a single batch, < 100 scans are recommended for the computation speed.
-  start_idx: 50 # change this 
-  end_idx: 200 # change this
+  start_idx: 0 # change this 
+  end_idx: 257 # change this
 
 
   # @ auto repeat
   #   means the removeter runs on all scans in a sequence 
-  clean_for_all_scan: false # default is false
-  batch_size: 150
+  clean_for_all_scan: true # default is false
+  batch_size: 258 # was 100
   valid_ratio_to_save: 0.75 # i.e., no save cleaned scans located at the boundaries of a batch  
 
 
@@ -64,7 +65,7 @@ removert:
 
   # @ Removert params 
   # about density 
-  downsample_voxel_size: 0.05 # user parameter but recommend to use 0.05 to make sure an enough density (this value is related to the removing resolution's expected performance)
+  downsample_voxel_size: 0.035 # user parameter but recommend to use 0.05 to make sure an enough density (this value is related to the removing resolution's expected performance)
 
   # about Static sensitivity (you need to tune these below two values, depends on the environement)
   # - if you use a raw scan 
@@ -73,7 +74,7 @@ removert:
 
   # about Static sensitivity (SC-LIO-SAM's feature cloud)
   # - if you use a SC-LIO-SAM's feature cloud
-  num_nn_points_within: 2 # how many - using higher, more strict static 
+  num_nn_points_within: 1 # was2 # how many - using higher, more strict static 
   dist_nn_points_within: 0.2 # meter - using smaller, more strict static (if you use a already downsampled feature cloud, use quite large value such as > 0.2 )
 
 

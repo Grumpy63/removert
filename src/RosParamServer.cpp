@@ -42,7 +42,7 @@ RosParamServer::RosParamServer()
     std::sort(sequence_scan_paths_.begin(), sequence_scan_paths_.end());
 
     num_total_scans_of_sequence_ = sequence_scan_paths_.size();
-    ROS_INFO_STREAM("\033[1;32m Total : " << num_total_scans_of_sequence_ << " scans in the directory.\033[0m");
+    ROS_INFO_STREAM("\033[ 1;32m Total : " << num_total_scans_of_sequence_ << " scans in the directory.\033[0m");
 
     // point cloud pre-processing
     nh.param<float>("removert/downsample_voxel_size", kDownsampleVoxelSize, 0.05);
@@ -50,8 +50,10 @@ RosParamServer::RosParamServer()
     // parsing pose info
     nh.param<std::string>("removert/sequence_pose_path", sequence_pose_path_, "/use/your/path/having/pose.txt");
     std::ifstream pose_file_handle (sequence_pose_path_);
+    std::ifstream pose_file_handle2 (sequence_pose_path_);
     int num_poses {0};
     std::string strOneLine;
+
     while (getline(pose_file_handle, strOneLine)) 
     {
         // str to vec
@@ -68,8 +70,8 @@ RosParamServer::RosParamServer()
         Eigen::Matrix4d ith_pose_inverse = ith_pose.inverse();
 
         // save (move)
-        // cout << "Pose of scan: " << sequence_scan_names_.at(num_poses) << endl;
-        // cout << ith_pose << endl;
+        //cout << "Pose of scan: " << sequence_scan_names_.at(num_poses) << endl;
+        //cout << ith_pose << endl;
         sequence_scan_poses_.emplace_back(ith_pose);
         sequence_scan_inverse_poses_.emplace_back(ith_pose_inverse);
 
