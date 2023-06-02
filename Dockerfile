@@ -33,9 +33,6 @@ RUN sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /catkin_ws/src/removert
 RUN cd /catkin_ws/src
 
-# Pull removert from GIT
-RUN git clone https://github.com/irapkaist/removert.git /catkin_ws/src
-
 # Copy the removert source code into the /catin_ws/src/removert directory
 #COPY . /catkin_ws/src/removert
 
